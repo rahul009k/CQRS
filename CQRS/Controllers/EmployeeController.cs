@@ -21,7 +21,7 @@ namespace CQRS.Controllers
 
         // GET: api/<EmployeeController>
         [HttpGet]
-
+        [Route("GetEmployeeList")]
         public async Task<List<Employee>> GetEmployeeList()
         {
             var employeelist = await _mediator.Send(new GetAllEmployeeQuery());
@@ -30,6 +30,7 @@ namespace CQRS.Controllers
 
         // GET api/<EmployeeController>/5
         [HttpGet("{id}")]
+        [Route("GetEmployeeById/{id}")]
         public async Task<Employee> GetEmployeeById(int id)
         {
             var employee = await _mediator.Send(new GetEmployeeByIdQuery(id));
@@ -38,6 +39,7 @@ namespace CQRS.Controllers
 
         // POST api/<EmployeeController>
         [HttpPost]
+        [Route("AddNewEmployee")]
         public async Task<Employee> AddNewEmployee(Employee employee)
         {
             var emp = await _mediator.Send(new AddNewEmployeeCommand
@@ -47,6 +49,7 @@ namespace CQRS.Controllers
 
         // PUT api/<EmployeeController>/5
         [HttpPut("{id}")]
+        [Route("UpdateEmployee/{id}")]
         public async Task<int> UpdateEmployee(Employee employee)
         {
             var emp = await _mediator.Send(new UpdateEmployeeCommand
@@ -56,6 +59,7 @@ namespace CQRS.Controllers
 
         // DELETE api/<EmployeeController>/5
         [HttpDelete("{id}")]
+        [Route("DeleteEmpolyee/{id}")]
         public async Task<int> DeleteEmpolyee(int id)
         {
             return await _mediator.Send(new DeleteEmployeeCommand(id));
