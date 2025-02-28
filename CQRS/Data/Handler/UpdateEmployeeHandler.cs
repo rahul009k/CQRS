@@ -5,7 +5,7 @@ using MediatR;
 
 namespace CQRS.Data.Handler
 {
-    public class UpdateEmployeeHandler:IRequestHandler<UpdateEmployeeCommand, int>
+    public class UpdateEmployeeHandler:IRequestHandler<UpdateEmployeeCommand, Employee?>
     {
         private IEmployeeRepository _employee;
 
@@ -14,7 +14,7 @@ namespace CQRS.Data.Handler
             _employee = employee;
         }
 
-        public async Task<int> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
+        public async Task<Employee?> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
             var employee = await _employee.GetEmployeeById(request.id);
             if(employee!=null)

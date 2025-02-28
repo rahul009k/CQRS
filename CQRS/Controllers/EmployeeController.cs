@@ -29,9 +29,9 @@ namespace CQRS.Controllers
         }
 
         // GET api/<EmployeeController>/5
-        [HttpGet("{id}")]
-        [Route("GetEmployeeById/{id}")]
-        public async Task<Employee> GetEmployeeById(int id)
+        [HttpGet("GetEmployeeById/{id}")]
+       
+        public async Task<Employee?> GetEmployeeById(int id)
         {
             var employee = await _mediator.Send(new GetEmployeeByIdQuery(id));
             return employee;
@@ -48,22 +48,29 @@ namespace CQRS.Controllers
         }
 
         // PUT api/<EmployeeController>/5
-        [HttpPut("{id}")]
-        [Route("UpdateEmployee/{id}")]
-        public async Task<int> UpdateEmployee(Employee employee)
+        [HttpPut("UpdateEmployee/{id}")]
+       
+        public async Task<Employee?> UpdateEmployee(Employee employee)
         {
             var emp = await _mediator.Send(new UpdateEmployeeCommand
             (employee.id, employee.Name, employee.Email, employee.Phone));
+            if (emp == null)
+            {
+                return null;
+            }
             return emp;
         }
 
         // DELETE api/<EmployeeController>/5
-        [HttpDelete("{id}")]
-        [Route("DeleteEmpolyee/{id}")]
+        [HttpDelete("DeleteEmpolyee/{id}")]
         public async Task<int> DeleteEmpolyee(int id)
         {
-            return await _mediator.Send(new DeleteEmployeeCommand(id));
-             
+            var result = await _mediator.Send(new DeleteEmployeeCommand(id));
+            if (result == 0)
+            {
+                return 0;
+            }
+            return result;
         }
-    }
+        }
 }

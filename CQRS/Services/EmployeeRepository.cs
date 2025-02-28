@@ -47,7 +47,7 @@ namespace CQRS.Services
             else throw new Exception($"Employee with ID {Id} not found.");
         }
 
-        public async Task<int> UpdateEmployee(Employee employee)
+        public async Task<Employee?> UpdateEmployee(Employee employee)
         {
             var record = await _dbContext.employees.FindAsync(employee.id);
             if (record != null)
@@ -55,9 +55,10 @@ namespace CQRS.Services
                 record.Name = employee.Name;
                 record.Email = employee.Email;
                 record.Phone = employee.Phone;
-                return await _dbContext.SaveChangesAsync();
+                 await _dbContext.SaveChangesAsync();
+                return record;
             }
-            else return 0;
+            else return null;
         }
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CQRS.Data.Quries
 {
-    public class GetEmployeeByIdQuery:IRequest<Employee>
+    public class GetEmployeeByIdQuery:IRequest<Employee?>
     {
 
        public int Id { get; set; }
